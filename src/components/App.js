@@ -57,6 +57,28 @@ export default class App extends Component {
     })
   }
 
+  updateItemFlag = (id, flagName) => {
+    this.setState( ({ items }) => {
+      const updatedItems = items.map( item => {
+        if (item.id === id) {
+          item[flagName] = !item[flagName]
+        }
+        return item
+      })
+      return {
+        items: updatedItems
+      }
+    })
+  }
+
+  markItemComplete = (id) => {
+    this.updateItemFlag(id, 'completed')
+  }
+
+  markItemImportant = (id) => {
+    this.updateItemFlag(id, 'important')
+  }
+
   render() {
     const { items = [] } = this.state
 
@@ -79,7 +101,11 @@ export default class App extends Component {
               <TodoFilter />
             </div>
           </div>
-            <TodoList items={items} handleItemDelete={ this.deleteItem } />
+            <TodoList items={items}
+              handleItemDelete={ this.deleteItem }
+              handleItemComplete={ this.markItemComplete }
+              handleMarkImportant={ this.markItemImportant }
+            />
             <TodoItemAdd handleItemAdd={ this.addItem } />
         </div>
       </div>

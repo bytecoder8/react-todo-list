@@ -1,25 +1,23 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import './TodoListItem.css'
 
 
 export default class TodoListItem extends Component {
   
-  state = {
-    important: this.props.important,
-    completed: this.props.completed
-  }
-
-  markCompleted = () => {
-    this.setState( state => ({ completed: !state.completed }))
-  }
-
-  markImportant = () => {
-    this.setState( state => ({ important: !state.important }))
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    important: PropTypes.bool,
+    completed: PropTypes.bool,
+    handleItemDelete: PropTypes.func.isRequired,
+    handleItemComplete: PropTypes.func.isRequired,
+    handleMarkImportant: PropTypes.func.isRequired
   }
 
   render() {
-    const { title, handleItemDelete } = this.props
-    const { important, completed } = this.state
+    const { title, important = false, completed = false, 
+            handleItemDelete, handleItemComplete, handleMarkImportant 
+          } = this.props
 
     let classNames = 'todo-list-item'
     if (important) {
@@ -31,12 +29,12 @@ export default class TodoListItem extends Component {
 
     return(
       <div className={ classNames } data-testid="todo-list-item">
-        <div className="title" onClick={ this.markCompleted }>{ title }</div>
+        <div className="title" onClick={ handleItemComplete }>{ title }</div>
         <div className="buttons">
           <button
             type="button"
             className="btn btn-outline-success btn-sm"
-            onClick={ this.markImportant }
+            onClick={ handleMarkImportant }
           >
             <i className="fa fa-exclamation"></i>
           </button>
@@ -44,7 +42,7 @@ export default class TodoListItem extends Component {
             type="button"
             className="btn btn-outline-danger btn-sm"
             role="delete"
-            onClick={handleItemDelete}
+            onClick={ handleItemDelete }
           >
             <i className="fa fa-trash-o"></i>
           </button>

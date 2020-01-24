@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import TodoListItem from './TodoListItem'
 import './TodoList.css'
 
-const TodoList = ({ items = [], handleItemDelete }) => {
+const TodoList = ({ items, handleItemDelete, handleItemComplete, handleMarkImportant }) => {
   const elements = items.map( item => {
     
     const { id, ...itemProps } = item
@@ -12,6 +13,8 @@ const TodoList = ({ items = [], handleItemDelete }) => {
         <TodoListItem
           { ...itemProps }
           handleItemDelete={ () => handleItemDelete(id) }
+          handleItemComplete={ () => handleItemComplete(id) }
+          handleMarkImportant={ () => handleMarkImportant(id) }
         />
       </li>
     )
@@ -22,6 +25,13 @@ const TodoList = ({ items = [], handleItemDelete }) => {
       { elements }
     </ul>
   )
+}
+
+TodoList.propTypes = {
+  items: PropTypes.array.isRequired,
+  handleItemDelete: PropTypes.func.isRequired,
+  handleItemComplete: PropTypes.func.isRequired,
+  handleMarkImportant: PropTypes.func.isRequired
 }
 
 export default TodoList
