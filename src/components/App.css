@@ -1,0 +1,25 @@
+.app {
+  margin-top: 1rem;
+}
+
+.app .stats {
+  align-self: flex-end;
+  text-align: right;
+}
+
+.app .title {
+  margin-bottom: 0;
+}
+
+.app header {
+  margin-bottom: 1rem;
+}
+
+.app .search-panel {
+  margin-bottom: 1rem;
+}
+
+.app .todo-filter {
+  margin-bottom: 1rem;
+  text-align: right;
+}

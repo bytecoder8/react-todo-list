@@ -1,0 +1,15 @@
+.todo-list-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-around;
+}
+
+.todo-list-item .title {
+  flex-basis: 80%;
+}
+
+.todo-list-item .btn {
+  margin-left: 0.25rem;
+  width: 36px;
+}
