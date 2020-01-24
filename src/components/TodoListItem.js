@@ -30,7 +30,7 @@ export default class TodoListItem extends Component {
     }
 
     return(
-      <div className={ classNames }>
+      <div className={ classNames } data-testid="todo-list-item">
         <div className="title" onClick={ this.markCompleted }>{ title }</div>
         <div className="buttons">
           <button
@@ -43,6 +43,7 @@ export default class TodoListItem extends Component {
           <button
             type="button"
             className="btn btn-outline-danger btn-sm"
+            role="delete"
             onClick={handleItemDelete}
           >
             <i className="fa fa-trash-o"></i>

@@ -2,7 +2,7 @@ import React from 'react'
 import TodoListItem from './TodoListItem'
 import './TodoList.css'
 
-const TodoList = ({ items, handleItemDelete }) => {
+const TodoList = ({ items = [], handleItemDelete }) => {
   const elements = items.map( item => {
     
     const { id, ...itemProps } = item

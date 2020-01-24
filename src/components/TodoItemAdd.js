@@ -15,15 +15,18 @@ export default class TodoItemAdd extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.handleItemAdd(this.state.title.trim())
-    this.setState({ title: '' })
+    const title = this.state.title.trim()
+    if (title.length) {
+      this.props.handleItemAdd(title)
+      this.setState({ title: '' })
+    }
   }
 
   render() {
     const { title } = this.state
 
     return (
-      <form className="todo-item-add row" onSubmit={ this.handleSubmit }>
+      <form className="todo-item-add row" onSubmit={ this.handleSubmit } data-testid="todo-item-add">
         <div className="col-12 col-md-8">
           <input
             type="text"
@@ -32,6 +35,7 @@ export default class TodoItemAdd extends Component {
             placeholder="Type and hit Enter to add"
             value={ title }
             onChange={ this.handleInputChange }
+            data-testid="todo-item-add-input"
           />
         </div>
         <div className="col-12 col-md-4">
