@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { Component } from 'react'
 import TodoList from './TodoList'
 import SearchPanel from './SearchPanel'
 import TodoFilter from './TodoFilter'
 import './App.css'
 
-const items = [
+const initialItems = [
   {
     id: 1,
     title: 'Buy coffee beans',
@@ -25,28 +25,45 @@ const items = [
   }
 ]
 
-const App = () => (
-  <div id="app" className="app row">
-    <div className="col-12 offset-0 col-lg-6 offset-lg-3 ">
-      <header className="row">
-        <h1 className="title col-12 col-md-6">
-          Todo List
-        </h1>
-        <div className="stats col-12 col-md-6">
-          2 more to do, 1 done
-        </div>
-      </header>
-      <div className="filters row">
-        <div className="col-12 col-md-6">
-          <SearchPanel />
-        </div>
-        <div className="col-12 col-md-6">
-          <TodoFilter />
+export default class App extends Component {
+
+  state = {
+    items: initialItems
+  }
+
+  deleteItem = (id) => {
+    this.setState( ({ items }) => {
+      return {
+        items: items.filter( item => item.id !== id)
+      }
+    })
+  }
+
+  render() {
+    const { items = [] } = this.state
+
+    return(
+      <div id="app" className="app row">
+        <div className="col-12 offset-0 col-lg-6 offset-lg-3 ">
+          <header className="row">
+            <h1 className="title col-12 col-md-6">
+              Todo List
+            </h1>
+            <div className="stats col-12 col-md-6">
+              2 more to do, 1 done
+            </div>
+          </header>
+          <div className="filters row">
+            <div className="col-12 col-md-6">
+              <SearchPanel />
+            </div>
+            <div className="col-12 col-md-6">
+              <TodoFilter />
+            </div>
+          </div>
+          <TodoList items={items} handleItemDelete={ this.deleteItem } />
         </div>
       </div>
-      <TodoList items={items} />
-    </div>
-  </div>
-)
-
-export default App
+    )
+  }
+}
