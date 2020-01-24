@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import TodoList from './TodoList'
 import SearchPanel from './SearchPanel'
 import TodoFilter from './TodoFilter'
+import TodoItemAdd from './TodoItemAdd'
 import './App.css'
 
 const initialItems = [
@@ -39,6 +40,24 @@ export default class App extends Component {
     })
   }
 
+  addItem = (title) => {
+    this.setState( ({ items }) => {
+      const maxId = items.reduce((acc, curr) => {
+        return(curr.id > acc ? curr.id : acc)
+      }, 0)
+      const newId = maxId + 1
+      const newItem = {
+        id: newId,
+        title,
+        important: false,
+        completed: false
+      }
+      return {
+        items: items.concat(newItem) 
+      }
+    })
+  }
+
   render() {
     const { items = [] } = this.state
 
@@ -61,7 +80,8 @@ export default class App extends Component {
               <TodoFilter />
             </div>
           </div>
-          <TodoList items={items} handleItemDelete={ this.deleteItem } />
+            <TodoList items={items} handleItemDelete={ this.deleteItem } />
+            <TodoItemAdd handleItemAdd={ this.addItem } />
         </div>
       </div>
     )

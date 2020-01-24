@@ -8,7 +8,7 @@ const TodoList = ({ items, handleItemDelete }) => {
     const { id, ...itemProps } = item
 
     return (
-      <li key={item.title} className="list-group-item">
+      <li key={id} className="list-group-item">
         <TodoListItem
           { ...itemProps }
           handleItemDelete={ () => handleItemDelete(id) }
