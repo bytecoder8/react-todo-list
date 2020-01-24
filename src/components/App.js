@@ -45,9 +45,8 @@ export default class App extends Component {
       const maxId = items.reduce((acc, curr) => {
         return(curr.id > acc ? curr.id : acc)
       }, 0)
-      const newId = maxId + 1
       const newItem = {
-        id: newId,
+        id: maxId + 1,
         title,
         important: false,
         completed: false
