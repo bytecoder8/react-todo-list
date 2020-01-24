@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './TodoFilter.css'
 
 
-export class TodoFilter extends Component {
+export default class TodoFilter extends Component {
   render() {
     return (
       <div className="todo-filter">
@@ -13,5 +13,3 @@ export class TodoFilter extends Component {
     )
   }
 }
-
-export default TodoFilter

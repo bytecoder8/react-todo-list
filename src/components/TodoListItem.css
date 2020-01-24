@@ -7,9 +7,18 @@
 
 .todo-list-item .title {
   flex-basis: 80%;
+  cursor: pointer;
 }
 
 .todo-list-item .btn {
   margin-left: 0.25rem;
   width: 36px;
+}
+
+.todo-list-item.completed .title {
+  text-decoration: line-through;
+}
+.todo-list-item.important .title {
+  font-weight: bold;
+  color: teal;
 }
