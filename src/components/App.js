@@ -61,10 +61,14 @@ export default class App extends Component {
     this.setState( ({ items }) => {
       const updatedItems = items.map( item => {
         if (item.id === id) {
-          item[flagName] = !item[flagName]
+          return {
+            ...item,
+            [flagName]: !item[flagName]
+          }
         }
         return item
       })
+      
       return {
         items: updatedItems
       }

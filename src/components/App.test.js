@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, getByTestId } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import App from './App'
 
 
@@ -68,8 +68,8 @@ describe('Adding new items', () => {
 
 describe('Deleting items', () => {
   it('When the delete button is pressed it removes the entire item', () => {
-    const { getAllByRole, getAllByTestId } = render(<App />)
-    const deleteButtons = getAllByRole('delete')
+    const { getAllByTestId } = render(<App />)
+    const deleteButtons = getAllByTestId('todo-list-delete')
     expect(deleteButtons.length).toBe(3)
 
     fireEvent.click(deleteButtons[0])
@@ -77,5 +77,32 @@ describe('Deleting items', () => {
     expect(items.length).toBe(2)
     expect(items[0]).toHaveTextContent('Buy a milk')
 
+  })
+})
+
+
+describe('Mark items', () => {
+  it('When the item\'s title is clicked it is marked as completed', () => {
+    const { getByText } = render(<App />)
+    const itemTitleElement = getByText('Buy a milk')
+    const itemElement = itemTitleElement.parentElement
+
+    expect(itemElement).toBeInTheDocument()
+    expect(itemElement).not.toHaveClass('completed')
+
+    fireEvent.click(itemTitleElement)
+    expect(itemElement).toHaveClass('completed')
+  })
+
+  it('When the button is clicked the items is marked as important', () => {
+    const { getByText, getAllByTestId } = render(<App />)
+    const itemElement = getByText('Buy a milk').parentElement
+    const buttonElement = getAllByTestId('todo-list-mark-important')
+
+    expect(itemElement).toBeInTheDocument()
+    expect(itemElement).not.toHaveClass('important')
+
+    fireEvent.click(buttonElement[1])
+    expect(itemElement).toHaveClass('important')
   })
 })

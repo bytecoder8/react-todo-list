@@ -34,6 +34,7 @@ export default class TodoListItem extends Component {
           <button
             type="button"
             className="btn btn-outline-success btn-sm"
+            data-testid="todo-list-mark-important"
             onClick={ handleMarkImportant }
           >
             <i className="fa fa-exclamation"></i>
@@ -41,7 +42,7 @@ export default class TodoListItem extends Component {
           <button
             type="button"
             className="btn btn-outline-danger btn-sm"
-            role="delete"
+            data-testid="todo-list-delete"
             onClick={ handleItemDelete }
           >
             <i className="fa fa-trash-o"></i>
