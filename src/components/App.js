@@ -1,32 +1,12 @@
 import React, { Component } from 'react'
 import LocalStorageAdapter from '../services/storage/LocalStorageAdapter'
 import { debounce } from 'lodash'
+import { initialItems } from '../store'
 import TodoList from './TodoList'
 import SearchPanel from './SearchPanel'
 import TodoFilter from './TodoFilter'
 import TodoItemAdd from './TodoItemAdd'
 import './App.css'
-
-const initialItems = [
-  {
-    id: 1,
-    title: 'Buy coffee beans',
-    important: false,
-    completed: true
-  },
-  {
-    id: 2,
-    title: 'Buy a milk',
-    important: false,
-    completed: false
-  },
-  {
-    id: 3,
-    title: 'Make a coffee',
-    important: true,
-    completed: false
-  }
-]
 
 
 export default class App extends Component {
@@ -136,7 +116,7 @@ export default class App extends Component {
 
   getFilteredItems = () => {
     const { search, filter, items } = this.state
-    const searchText = search.trim()
+    const searchText = search.trim().toLowerCase()
 
     return items.filter( item => {
       let match = true
@@ -150,7 +130,10 @@ export default class App extends Component {
       }
 
       if (searchText.length) {
-        if (!item.title.includes(searchText)) {
+        if (item.title
+          .toLowerCase()
+          .indexOf(searchText) === -1) 
+        {
           match = false
         }
       }

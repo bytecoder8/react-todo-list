@@ -139,3 +139,46 @@ describe('Stats', () => {
     expect(getByText(/3 done/)).toBeInTheDocument()
   })
 })
+
+
+describe('Searching and filtering', () => {
+
+  it ('Searching', () => {
+    const { getAllByTestId, getByPlaceholderText } = render(<App />)
+
+    const input = getByPlaceholderText(/search/i)
+    fireEvent.change(input, {
+      target: { value: ' buy ' }
+    })
+
+    const items = getAllByTestId('todo-list-item')
+    expect(items.length).toBe(2)
+    expect(items[0]).toHaveTextContent('Buy coffee beans')
+    expect(items[1]).toHaveTextContent('Buy a milk')
+  })
+  
+  it('Filtering', () => {
+    const { getAllByTestId, getByText } = render(<App />)
+    const button = getByText('Done')
+    fireEvent.click(button)
+
+    const items = getAllByTestId('todo-list-item')
+    expect(items.length).toBe(1)
+    expect(items[0]).toHaveTextContent('Buy coffee beans')
+  })
+
+  it('Searching and filtering at the same time', () => {
+    const { getAllByTestId, getByPlaceholderText, getByText } = render(<App />)
+
+    const button = getByText(/active/i)
+    fireEvent.click(button)
+    const input = getByPlaceholderText(/search/i)
+    fireEvent.change(input, {
+      target: { value: 'Coffee' }
+    })
+
+    const items = getAllByTestId('todo-list-item')
+    expect(items.length).toBe(1)
+    expect(items[0]).toHaveTextContent('Make a coffee')
+  })
+})
