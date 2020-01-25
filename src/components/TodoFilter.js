@@ -28,9 +28,9 @@ export default function TodoFilter({
 
   return (
     <div className="todo-filter" data-testid="todo-filter">
-      { createButton('All', '') }
-      { createButton('Active', 'incompleted') }
-      { createButton('Done', 'completed') }
+      { createButton('All', 'all') }
+      { createButton('Active', 'active') }
+      { createButton('Done', 'done') }
     </div>
   )
 }

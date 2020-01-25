@@ -20,7 +20,7 @@ export default class App extends Component {
       this.state = {
         items: initialItems,
         search: '',
-        filter: ''
+        filter: 'all'
       }
     } else {
       this.state = {
@@ -121,12 +121,18 @@ export default class App extends Component {
     return items.filter( item => {
       let match = true
 
-      if (filter) {
-        if (filter === 'completed' && !item.completed) {
-          match = false
-        } else if (filter === 'incompleted' && item.completed) {
-          match = false
-        }
+      switch (filter) {
+        case 'active':
+          if (item.completed) {
+            match = false
+          }
+          break;
+        case 'done':
+          if (!item.completed) {
+            match = false
+          }
+        default:
+          break;
       }
 
       if (searchText.length) {
