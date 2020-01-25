@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import LocalStorageAdapter from '../services/storage/LocalStorageAdapter'
 import TodoList from './TodoList'
 import SearchPanel from './SearchPanel'
 import TodoFilter from './TodoFilter'
@@ -26,10 +27,29 @@ const initialItems = [
   }
 ]
 
+
 export default class App extends Component {
 
-  state = {
-    items: initialItems
+  constructor(props) {
+    super(props)
+
+    this.storage = new LocalStorageAdapter('todo-list')
+    let data = this.storage.loadData()
+    if (!data) {
+      this.state = {
+        items: initialItems
+      }
+    } else {
+      this.state = {
+        items: data.items
+      }
+    }
+  }
+
+  componentDidUpdate(nextProps, nextState) {
+    if (this.state !== nextState) {
+      this.storage.saveData(this.state)
+    }
   }
 
   deleteItem = (id) => {
