@@ -1,15 +1,36 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './TodoFilter.css'
 
 
-export default class TodoFilter extends Component {
-  render() {
+export default function TodoFilter({
+  handleFilterChange,
+  filter
+}) {
+
+  const createButton = (text, filterValue) => {
+    const current = filterValue === filter
+
+    let classNames = 'btn'
+    if (current) {
+      classNames += ' btn-info'
+    } else {
+      classNames += ' btn-outline-secondary'
+    }
+
     return (
-      <div className="todo-filter" data-testid="todo-filter">
-        <button type="button" className="btn btn-info">All</button>
-        <button type="button" className="btn btn-outline-secondary">Active</button>
-        <button type="button" className="btn btn-outline-secondary">Done</button>
-      </div>
+      <button
+        type="button"
+        className={ classNames }
+        onClick={ () => handleFilterChange( filterValue ) }
+      >{ text }</button>
     )
   }
+
+  return (
+    <div className="todo-filter" data-testid="todo-filter">
+      { createButton('All', '') }
+      { createButton('Active', 'incompleted') }
+      { createButton('Done', 'completed') }
+    </div>
+  )
 }

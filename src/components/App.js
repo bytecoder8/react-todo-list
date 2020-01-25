@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import LocalStorageAdapter from '../services/storage/LocalStorageAdapter'
+import { debounce } from 'lodash'
 import TodoList from './TodoList'
 import SearchPanel from './SearchPanel'
 import TodoFilter from './TodoFilter'
@@ -37,18 +38,26 @@ export default class App extends Component {
     let data = this.storage.loadData()
     if (!data) {
       this.state = {
-        items: initialItems
+        items: initialItems,
+        search: '',
+        filter: ''
       }
     } else {
       this.state = {
-        items: data.items
+        items: data.items,
+        search: data.search,
+        filter: data.filter
       }
     }
+
+    this.debouncedSaveData = debounce(() => {
+      this.storage.saveData(this.state)
+    }, 250)
   }
 
   componentDidUpdate(nextProps, nextState) {
     if (this.state !== nextState) {
-      this.storage.saveData(this.state)
+      this.debouncedSaveData()
     }
   }
 
@@ -102,6 +111,18 @@ export default class App extends Component {
   markItemImportant = (id) => {
     this.updateItemFlag(id, 'important')
   }
+  
+  handleSearch = (text) => {
+    this.setState({
+      search: text
+    })
+  }
+
+  handleFilterChange = (filter) => {
+    this.setState({
+      filter
+    })
+  }
 
   getStats = () => {
     const { items } = this.state
@@ -113,9 +134,35 @@ export default class App extends Component {
     return { completed, remaining }
   }
 
+  getFilteredItems = () => {
+    const { search, filter, items } = this.state
+    const searchText = search.trim()
+
+    return items.filter( item => {
+      let match = true
+
+      if (filter) {
+        if (filter === 'completed' && !item.completed) {
+          match = false
+        } else if (filter === 'incompleted' && item.completed) {
+          match = false
+        }
+      }
+
+      if (searchText.length) {
+        if (!item.title.includes(searchText)) {
+          match = false
+        }
+      }
+
+      return match
+    })
+  }
+
   render() {
-    const { items = [] } = this.state
-    const { completed, remaining } = this.getStats() 
+    const { search, filter } = this.state
+    const { completed, remaining } = this.getStats()
+    const items = this.getFilteredItems()
 
     return(
       <div id="app" className="app row">
@@ -130,10 +177,10 @@ export default class App extends Component {
           </header>
           <div className="filters row">
             <div className="col-12 col-md-6">
-              <SearchPanel />
+              <SearchPanel handleSearch={ this.handleSearch } searchText={ search } />
             </div>
             <div className="col-12 col-md-6">
-              <TodoFilter />
+              <TodoFilter handleFilterChange={ this.handleFilterChange } filter={ filter } />
             </div>
           </div>
             <TodoList items={items}
