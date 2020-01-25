@@ -126,13 +126,14 @@ export default class App extends Component {
           if (item.completed) {
             match = false
           }
-          break;
+          break
         case 'done':
           if (!item.completed) {
             match = false
           }
+          break
         default:
-          break;
+          break
       }
 
       if (searchText.length) {
