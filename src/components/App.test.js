@@ -106,3 +106,35 @@ describe('Mark items', () => {
     expect(itemElement).toHaveClass('important')
   })
 })
+
+
+describe('Stats', () => {
+  it('Shows number of completed and remaining items', () => {
+    const { getByText } = render(<App />)
+    expect(getByText(/2 more to do/i)).toBeInTheDocument()
+    expect(getByText(/1 done/)).toBeInTheDocument()
+  })
+
+  it('Shows updated numbers', () => {
+    const { getByText } = render(<App />)
+
+    fireEvent.click(getByText('Buy a milk'))
+
+    expect(getByText(/1 more to do/i)).toBeInTheDocument()
+    expect(getByText(/2 done/)).toBeInTheDocument()
+  })
+
+  it ('Show different text when everything is completed', () => {
+    const { getAllByTestId, getByText } = render(<App />)
+
+    const items = getAllByTestId('todo-list-item')
+    for (const item of items) {
+      if (!item.classList.contains('completed')) {
+        fireEvent.click(item.firstChild)
+      }
+    }
+
+    expect(getByText(/Nothing to do/i)).toBeInTheDocument()
+    expect(getByText(/3 done/)).toBeInTheDocument()
+  })
+})

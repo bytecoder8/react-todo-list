@@ -68,7 +68,7 @@ export default class App extends Component {
         }
         return item
       })
-      
+
       return {
         items: updatedItems
       }
@@ -83,8 +83,19 @@ export default class App extends Component {
     this.updateItemFlag(id, 'important')
   }
 
+  getStats = () => {
+    const { items } = this.state
+    const completed = items.reduce((acc, curr) => {
+      return(curr.completed ? acc + 1 : acc)
+    }, 0)
+
+    const remaining = items.length - completed
+    return { completed, remaining }
+  }
+
   render() {
     const { items = [] } = this.state
+    const { completed, remaining } = this.getStats() 
 
     return(
       <div id="app" className="app row">
@@ -94,7 +105,7 @@ export default class App extends Component {
               Todo List
             </h1>
             <div className="stats col-12 col-md-6">
-              2 more to do, 1 done
+              { remaining ? `${remaining} more to do` : 'Nothing to do' }, { completed } done
             </div>
           </header>
           <div className="filters row">
