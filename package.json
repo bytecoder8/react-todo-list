@@ -2,6 +2,7 @@
   "name": "react-todo-list",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "https://bytecoder8.github.io/react-todo-list/build",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",

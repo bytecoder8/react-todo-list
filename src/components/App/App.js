@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import LocalStorageAdapter from '../services/storage/LocalStorageAdapter'
+import LocalStorageAdapter from '../../services/storage/LocalStorageAdapter'
 import { debounce } from 'lodash'
-import { initialItems } from '../store'
-import TodoList from './TodoList'
-import SearchPanel from './SearchPanel'
-import TodoFilter from './TodoFilter'
-import TodoItemAdd from './TodoItemAdd'
+import { initialItems } from '../../store'
+import TodoList from '../TodoList'
+import SearchPanel from '../SearchPanel'
+import TodoFilter from '../TodoFilter'
+import TodoItemAdd from '../TodoItemAdd'
 import './App.css'
 
 

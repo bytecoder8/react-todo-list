@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { capitalize } from '../utils'
+import { capitalize } from '../../utils'
 
 
 export default class TodoItemAdd extends Component {

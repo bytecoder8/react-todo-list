@@ -2,7 +2,7 @@ import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 import App from './App'
 
-jest.mock('../services/storage/LocalStorageAdapter')
+jest.mock('../../services/storage/LocalStorageAdapter')
 
 describe('<App />', () => {
   it('Renders app without critical errors', () => {
