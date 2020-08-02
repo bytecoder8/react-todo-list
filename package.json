@@ -2,7 +2,7 @@
   "name": "react-todo-list",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "https://bytecoder8.github.io/react-todo-list/build",
+  "homepage": "https://bytecoder8.github.io/react-todo-list/build",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -10,7 +10,7 @@
     "lodash": "^4.17.15",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
